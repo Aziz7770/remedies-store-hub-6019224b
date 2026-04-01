@@ -1,5 +1,5 @@
-import { useParams, Link } from "react-router-dom";
-import { ShoppingCart, Star, ArrowLeft, CheckCircle } from "lucide-react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ShoppingCart, Star, ArrowLeft, CheckCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { products } from "@/data/products";
@@ -8,6 +8,7 @@ import { toast } from "sonner";
 const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const product = products.find((p) => p.id === id);
 
   if (!product) {
@@ -68,9 +69,14 @@ const ProductDetail = () => {
 
           <p className="mt-4 text-sm text-foreground">{product.description}</p>
 
-          <Button size="lg" className="mt-6 w-full gap-2 md:w-auto" onClick={handleAdd}>
-            <ShoppingCart className="h-4 w-4" /> কার্টে যোগ করুন
-          </Button>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(product); navigate("/checkout"); }}>
+              <CreditCard className="h-4 w-4" /> এখনই অর্ডার করুন
+            </Button>
+            <Button size="lg" variant="outline" className="w-full gap-2" onClick={handleAdd}>
+              <ShoppingCart className="h-4 w-4" /> কার্টে যোগ করুন
+            </Button>
+          </div>
 
           <div className="mt-6 flex gap-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-primary" /> ১০০% আসল</span>
