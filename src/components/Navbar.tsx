@@ -21,11 +21,8 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       {/* Top bar */}
       <div className="gradient-primary">
-        <div className="container flex items-center justify-between py-1.5 text-xs text-primary-foreground">
-          <span className="flex items-center gap-1">
-            <Phone className="h-3 w-3" /> হেল্পলাইন: ০১৭XX-XXXXXX
-          </span>
-          <span>🚚 ঢাকায় ফ্রি ডেলিভারি ৫০০৳+ অর্ডারে</span>
+        <div className="container flex items-center justify-center py-1.5 text-xs text-primary-foreground">
+          <span>দিবা রাত্রি আপনাদের চিকিৎসা সেবায় নিয়োজিত</span>
         </div>
       </div>
 

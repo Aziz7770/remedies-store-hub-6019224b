@@ -18,7 +18,7 @@ const Index = () => {
           <img src={heroBanner} alt="হোমিওপ্যাথি" className="h-full w-full object-cover" width={1920} height={800} />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/40" />
         </div>
-        <div className="container relative py-16 md:py-28">
+        <div className="container relative py-12 md:py-20">
          <div className="max-w-lg">
             <h2 className="text-3xl font-extrabold leading-tight text-primary-foreground md:text-5xl">
               প্রাকৃতিক চিকিৎসায় গড়ে তুলুন <span className="text-gold">সুস্থ জীবন</span>
