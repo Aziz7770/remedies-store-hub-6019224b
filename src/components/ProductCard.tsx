@@ -58,8 +58,8 @@ const ProductCard = ({ product }: { product: Product }) => {
               </span>
             )}
           </div>
-          <Button size="sm" className="h-8 gap-1 text-xs" onClick={handleAdd}>
-            <ShoppingCart className="h-3 w-3" /> কার্ট
+          <Button size="sm" className="h-8 gap-1 text-xs" onClick={handleOrder}>
+            <CreditCard className="h-3 w-3" /> অর্ডার
           </Button>
         </div>
       </div>
