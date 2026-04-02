@@ -96,7 +96,7 @@ export const products: Product[] = [
     name: "থুজা ২০০",
     nameEn: "Thuja 200",
     price: 130,
-    originalPrice: 190,
+    originalPrice: 149,
     image: "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=400",
     category: "skin",
     description: "আঁচিল, মোলাস্কাম ও ত্বকের বিভিন্ন গ্রোথ দূর করতে অত্যন্ত কার্যকর।",
