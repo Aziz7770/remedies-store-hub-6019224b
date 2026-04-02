@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { Star, ShoppingCart } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Star, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/data/products";
@@ -7,10 +7,12 @@ import { toast } from "sonner";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
-  const handleAdd = () => {
+  const handleOrder = () => {
     addToCart(product);
-    toast.success(`${product.name} কার্টে যোগ হয়েছে!`);
+    toast.success("অর্ডার প্রস্তুত! আপনার তথ্য দিন।");
+    navigate("/checkout");
   };
 
   const discount = product.originalPrice
@@ -56,8 +58,8 @@ const ProductCard = ({ product }: { product: Product }) => {
               </span>
             )}
           </div>
-          <Button size="sm" className="h-8 gap-1 text-xs" onClick={handleAdd}>
-            <ShoppingCart className="h-3 w-3" /> কার্ট
+          <Button size="sm" className="h-8 gap-1 text-xs" onClick={handleOrder}>
+            <CreditCard className="h-3 w-3" /> অর্ডার
           </Button>
         </div>
       </div>
