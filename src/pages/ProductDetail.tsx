@@ -107,6 +107,37 @@ const ProductDetail = () => {
           <p className="mt-3 text-sm text-foreground">{product.ingredients}</p>
         </div>
       </div>
+
+      {/* Reviews Section */}
+      {reviews.length > 0 && (
+        <div className="mt-10">
+          <h2 className="text-xl font-bold text-foreground">কাস্টমার রিভিউ ({reviews.length})</h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reviews.map((review, i) => (
+              <div key={i} className="rounded-xl border border-border bg-card p-5 shadow-card">
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <Star key={j} className={`h-4 w-4 ${j < review.rating ? "fill-gold text-gold" : "text-border"}`} />
+                    ))}
+                  </div>
+                  <span className="text-xs text-muted-foreground">{review.date}</span>
+                </div>
+                <p className="mt-3 text-sm text-foreground">"{review.text}"</p>
+                <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                    {review.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{review.name}</p>
+                    <p className="text-xs text-muted-foreground">{review.location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
