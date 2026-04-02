@@ -19,6 +19,12 @@ const Checkout = () => {
 
   const deliveryCharge = totalPrice >= 500 ? 0 : 60;
 
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [submitted]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
@@ -31,7 +37,7 @@ const Checkout = () => {
       <div className="container py-20 text-center">
         <CheckCircle className="mx-auto h-16 w-16 text-primary" />
         <h2 className="mt-4 text-2xl font-bold text-foreground">অর্ডার সফল!</h2>
-        <p className="mt-2 text-sm text-muted-foreground">আপনার অর্ডার সফলভাবে গৃহীত হয়েছে। শীঘ্রই আমরা আপনার সাথে যোগাযোগ করব।</p>
+        <p className="mt-2 text-sm text-muted-foreground">আপনার অর্ডার সফলভাবে গৃহীত হয়েছে। শীঘ্রই আপনার সাথে যোগাযোগ করা হবে।</p>
         <Button onClick={() => navigate("/")} className="mt-6">হোমপেজে যান</Button>
       </div>
     );
