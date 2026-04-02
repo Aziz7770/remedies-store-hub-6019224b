@@ -19,6 +19,10 @@ const ProductLanding = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [viewers] = useState(Math.floor(Math.random() * 30) + 15);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   if (!product) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">

@@ -4,12 +4,17 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { products, productReviews } from "@/data/products";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const product = products.find((p) => p.id === id);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   if (!product) {
     return (
