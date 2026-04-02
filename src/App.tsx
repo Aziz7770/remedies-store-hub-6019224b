@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/context/CartContext";
+import { OrderProvider } from "@/context/OrderContext";
 import Navbar from "@/components/Navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Footer from "@/components/Footer";
@@ -20,6 +21,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import NotFound from "./pages/NotFound";
+import AdminOrders from "./pages/AdminOrders";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <CartProvider>
+        <OrderProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -52,6 +55,7 @@ const App = () => (
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/return-policy" element={<ReturnPolicy />} />
+                    <Route path="/admin/orders" element={<AdminOrders />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />
@@ -61,6 +65,7 @@ const App = () => (
             />
           </Routes>
         </BrowserRouter>
+        </OrderProvider>
       </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>

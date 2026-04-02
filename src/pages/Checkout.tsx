@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/context/CartContext";
+import { useOrders } from "@/context/OrderContext";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
 
@@ -12,6 +13,7 @@ const OWNER_WHATSAPP = "8801767678562";
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
+  const { addOrder } = useOrders();
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
   const orderItemsRef = useRef(items);
@@ -57,6 +59,22 @@ const Checkout = () => {
 
     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
+
+    // Save order to local storage
+    addOrder({
+      customerName: name,
+      phone,
+      address,
+      note: note || "",
+      items: currentItems.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.product.price,
+      })),
+      subtotal: currentTotal,
+      deliveryCharge: currentDelivery,
+      total: currentTotal + currentDelivery,
+    });
 
     setSubmitted(true);
     clearCart();
