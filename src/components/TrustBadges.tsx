@@ -1,8 +1,8 @@
 import { Shield, Truck, Clock, Award } from "lucide-react";
 
 const badges = [
-  { icon: Shield, label: "১০০% আসল ঔষধ", sub: "নিশ্চিত গ্যারান্টি" },
-  { icon: Truck, label: "দ্রুত ডেলিভারি", sub: "সারাদেশে ২-৫ দিন" },
+  { icon: Shield, label: "১০০% রোগ মুক্তি", sub: "নিশ্চিত গ্যারান্টি" },
+  { icon: Truck, label: "দ্রুত ডেলিভারি", sub: "সারাদেশে ২-৩ দিন" },
   { icon: Clock, label: "২৪/৭ সাপোর্ট", sub: "যেকোনো সময় কল করুন" },
   { icon: Award, label: "বিশেষজ্ঞ ডাক্তার", sub: "ফ্রি পরামর্শ" },
 ];
