@@ -53,10 +53,7 @@ const Checkout = () => {
               <div><Label htmlFor="name">আপনার নাম *</Label><Input id="name" required placeholder="পূর্ণ নাম" /></div>
               <div><Label htmlFor="phone">মোবাইল নম্বর *</Label><Input id="phone" required placeholder="০১XXXXXXXXX" type="tel" /></div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div><Label htmlFor="address">সম্পূর্ণ ঠিকানা *</Label><Textarea id="address" required placeholder="বাসা/ফ্ল্যাট নং, রোড, এলাকা, জেলা" /></div>
-              <div><Label htmlFor="thana">থানা *</Label><Input id="thana" required placeholder="আপনার থানার নাম" /></div>
-            </div>
+            <div><Label htmlFor="address">সম্পূর্ণ ঠিকানা *</Label><Textarea id="address" required placeholder="বাসা/ফ্ল্যাট নং, রোড, এলাকা, থানা, জেলা" /></div>
             <div><Label htmlFor="note">বিশেষ নোট (ঐচ্ছিক)</Label><Input id="note" placeholder="যেকোনো বিশেষ নির্দেশনা" /></div>
           </div>
 
