@@ -26,8 +26,8 @@ export const categories = [
   { id: "general", name: "সাধারণ স্বাস্থ্য", icon: "🏥", color: "bg-blue-50 text-blue-700" },
   { id: "digestive", name: "পেটের সমস্যা", icon: "🫁", color: "bg-yellow-50 text-yellow-700" },
   { id: "respiratory", name: "শ্বাসকষ্ট", icon: "🌬️", color: "bg-teal-50 text-teal-700" },
-  { id: "gynecomastia", name: "Gynecomastia", icon: "🫁", color: "bg-orange-50 text-orange-700" },
-  { id: "varicocele", name: "ভেরিকোসিল", icon: "🩺", color: "bg-indigo-50 text-indigo-700" },
+  { id: "gynecomastia", name: "Gynecomastia", icon: "🫃", color: "bg-orange-50 text-orange-700" },
+  { id: "varicocele", name: "ভেরিকোসিল", icon: "🔬", color: "bg-indigo-50 text-indigo-700" },
 ];
 
 export const products: Product[] = [
