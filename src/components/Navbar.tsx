@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShoppingCart, Menu, X, Phone, Leaf } from "lucide-react";
+import { ShoppingCart, Menu, X, Phone } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.jpg";
 
 const Navbar = () => {
   const { totalItems } = useCart();
@@ -32,11 +32,9 @@ const Navbar = () => {
       {/* Main nav */}
       <div className="container flex items-center justify-between py-3">
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full gradient-primary">
-            <Leaf className="h-5 w-5 text-primary-foreground" />
-          </div>
+          <img src={logo} alt="বিসমিল্লাহ হোমিও চেম্বার" className="h-10 w-10 rounded-full object-cover" />
           <div>
-            <h1 className="text-lg font-bold leading-tight text-foreground">হোমিওকেয়ার</h1>
+            <h1 className="text-lg font-bold leading-tight text-foreground">বিসমিল্লাহ হোমিও চেম্বার</h1>
             <p className="text-[10px] text-muted-foreground">বিশ্বস্ত হোমিওপ্যাথি চিকিৎসা</p>
           </div>
         </Link>
