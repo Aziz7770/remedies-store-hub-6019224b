@@ -19,6 +19,12 @@ const Checkout = () => {
 
   const deliveryCharge = totalPrice >= 500 ? 0 : 60;
 
+  useEffect(() => {
+    if (submitted) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [submitted]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
