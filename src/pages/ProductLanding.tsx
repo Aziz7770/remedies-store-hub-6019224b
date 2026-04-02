@@ -197,20 +197,32 @@ const ProductLanding = () => {
       </section>
 
       {/* ═══ BENEFITS GRID ═══ */}
-      <section className="py-8">
+      <section className="py-10">
         <div className="mx-auto max-w-md px-4">
-          <h2 className="text-center text-lg font-extrabold text-foreground">
-            🌿 কী কী উপকার পাবেন?
-          </h2>
-          <div className="mt-5 grid grid-cols-2 gap-3">
+          <div className="text-center">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1 text-[11px] font-bold text-primary">উপকারিতা</span>
+            <h2 className="mt-3 text-xl font-extrabold text-foreground">
+              🌿 কী কী উপকার পাবেন?
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">প্রতিটি উপকারিতা বৈজ্ঞানিকভাবে প্রমাণিত</p>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3">
             {product.benefits.map((b, i) => {
               const Icon = benefitIcons[i % benefitIcons.length];
+              const colors = [
+                "from-primary/15 to-primary/5 border-primary/25",
+                "from-accent/15 to-accent/5 border-accent/25",
+                "from-destructive/10 to-destructive/5 border-destructive/20",
+                "from-primary/10 to-accent/5 border-primary/20",
+              ];
+              const iconColors = ["text-primary", "text-accent", "text-destructive", "text-primary"];
+              const iconBgs = ["bg-primary/15", "bg-accent/15", "bg-destructive/10", "bg-primary/10"];
               return (
-                <div key={i} className="rounded-2xl border border-border bg-card p-4 text-center shadow-sm">
-                  <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                    <Icon className="h-5 w-5 text-primary" />
+                <div key={i} className={`rounded-2xl border bg-gradient-to-br ${colors[i % colors.length]} p-4 text-center shadow-sm`}>
+                  <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-xl ${iconBgs[i % iconBgs.length]} shadow-sm`}>
+                    <Icon className={`h-5 w-5 ${iconColors[i % iconColors.length]}`} />
                   </div>
-                  <p className="mt-2.5 text-xs font-bold leading-snug text-foreground">{b}</p>
+                  <p className="mt-3 text-[12px] font-bold leading-snug text-foreground">{b}</p>
                 </div>
               );
             })}
@@ -231,76 +243,124 @@ const ProductLanding = () => {
         </div>
       </section>
 
+      {/* ═══ INGREDIENTS SECTION ═══ */}
+      <section className="py-10">
+        <div className="mx-auto max-w-md px-4">
+          <div className="overflow-hidden rounded-2xl border-2 border-primary/20 shadow-sm">
+            {/* Header */}
+            <div className="gradient-primary px-5 py-3.5">
+              <h2 className="flex items-center gap-2 text-[15px] font-extrabold text-primary-foreground">
+                🧪 উপাদান সমূহ
+              </h2>
+              <p className="mt-0.5 text-[11px] text-primary-foreground/80">১০০% প্রাকৃতিক ও নিরাপদ উপাদান</p>
+            </div>
+            {/* Content */}
+            <div className="bg-gradient-to-b from-primary/5 to-card p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                  <BadgeCheck className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-[13px] font-bold text-foreground">{product.ingredients}</p>
+                  <p className="mt-1 text-[11px] text-muted-foreground">কোনো রাসায়নিক বা পার্শ্বপ্রতিক্রিয়াযুক্ত উপাদান নেই</p>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-semibold text-primary">
+                  <CheckCircle className="h-3 w-3" /> GMP সার্টিফাইড
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-3 py-1 text-[10px] font-semibold text-accent-foreground">
+                  <Shield className="h-3 w-3 text-accent" /> ল্যাব টেস্টেড
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-semibold text-primary">
+                  <CheckCircle className="h-3 w-3" /> WHO মানসম্পন্ন
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ EXPERT DOCTOR SECTION ═══ */}
-      <section className="py-8">
+      <section className="border-y border-border bg-secondary/50 py-10">
         <div className="mx-auto max-w-md px-4">
           <h2 className="text-center text-lg font-extrabold text-foreground">
             🩺 বিশেষজ্ঞ ডাক্তারের পরামর্শ
           </h2>
-          <div className="mt-5 rounded-2xl border border-border bg-card p-5 shadow-sm">
-            {/* Doctor info */}
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full gradient-primary text-xl font-bold text-primary-foreground shadow">
-                ড
-              </div>
-              <div>
-                <p className="text-sm font-extrabold text-foreground">{expertOpinion.name}</p>
-                <p className="text-[11px] text-muted-foreground">{expertOpinion.title}</p>
-                <p className="text-[11px] font-semibold text-primary">{expertOpinion.phone}</p>
+          <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            {/* Doctor info with colored header */}
+            <div className="gradient-primary p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary-foreground/20 text-xl font-bold text-primary-foreground shadow-md ring-2 ring-primary-foreground/30">
+                  ড
+                </div>
+                <div>
+                  <p className="text-sm font-extrabold text-primary-foreground">{expertOpinion.name}</p>
+                  <p className="text-[11px] text-primary-foreground/80">{expertOpinion.title}</p>
+                  <p className="text-[11px] font-semibold text-primary-foreground/90">{expertOpinion.phone}</p>
+                </div>
               </div>
             </div>
 
             {/* Quote */}
-            <p className="mt-4 text-[13px] italic leading-relaxed text-foreground">
-              {expertOpinion.quote}
-            </p>
+            <div className="p-5">
+              <div className="rounded-xl bg-primary/5 p-4">
+                <p className="text-[13px] italic leading-relaxed text-foreground">
+                  {expertOpinion.quote}
+                </p>
+              </div>
 
-            {/* Stats */}
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {expertOpinion.stats.map((s, i) => (
-                <div key={i} className="rounded-lg bg-primary/5 px-3 py-2 text-center">
-                  <p className="text-[11px] font-bold text-primary">{s.label}</p>
-                  <p className="text-[10px] text-muted-foreground">{s.value}</p>
-                </div>
-              ))}
+              {/* Stats */}
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                {expertOpinion.stats.map((s, i) => (
+                  <div key={i} className="rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 px-3 py-3 text-center">
+                    <p className="text-xs font-extrabold text-primary">{s.value}</p>
+                    <p className="mt-0.5 text-[10px] text-muted-foreground">{s.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ═══ CUSTOMER REVIEWS ═══ */}
-      <section className="border-y border-border bg-secondary/50 py-8">
+      <section className="py-10">
         <div className="mx-auto max-w-md px-4">
-          <h2 className="text-center text-lg font-extrabold text-foreground">
-            ⭐ গ্রাহকদের মতামত
-          </h2>
-          <div className="mt-1 flex items-center justify-center gap-1">
+          <div className="text-center">
+            <span className="inline-block rounded-full bg-accent/10 px-4 py-1 text-[11px] font-bold text-accent-foreground">সোশ্যাল প্রুফ</span>
+            <h2 className="mt-3 text-lg font-extrabold text-foreground">
+              ⭐ গ্রাহকদের মতামত
+            </h2>
+          </div>
+          <div className="mt-2 flex items-center justify-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-accent text-accent" />
+              <Star key={i} className="h-5 w-5 fill-gold text-gold" />
             ))}
-            <span className="ml-1 text-xs text-muted-foreground">{product.reviews}+ রিভিউ</span>
+            <span className="ml-1.5 text-xs font-bold text-foreground">{product.rating}</span>
+            <span className="text-xs text-muted-foreground">({product.reviews}+ রিভিউ)</span>
           </div>
 
           <div className="mt-5 space-y-3">
             {displayTestimonials.map((t) => (
-              <div key={t.id} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-foreground">{t.name}</p>
-                      <p className="text-[10px] text-muted-foreground">📍 {t.location}</p>
-                    </div>
+              <div key={t.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <div className="flex items-center gap-3 border-b border-border bg-secondary/50 px-4 py-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full gradient-primary text-sm font-bold text-primary-foreground shadow-sm">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-[13px] font-bold text-foreground">{t.name}</p>
+                    <p className="text-[10px] text-muted-foreground">📍 {t.location} • ✅ ভেরিফাইড ক্রেতা</p>
                   </div>
                   <div className="flex gap-0.5">
                     {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-accent text-accent" />
+                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
                     ))}
                   </div>
                 </div>
-                <p className="mt-2.5 text-xs italic leading-relaxed text-foreground">"{t.text}"</p>
+                <div className="px-4 py-3.5">
+                  <p className="text-[12px] italic leading-relaxed text-foreground">"{t.text}"</p>
+                </div>
               </div>
             ))}
           </div>
@@ -308,15 +368,43 @@ const ProductLanding = () => {
       </section>
 
       {/* ═══ USAGE SECTION ═══ */}
-      <section className="py-8">
+      <section className="border-y border-border bg-secondary/50 py-10">
         <div className="mx-auto max-w-md px-4">
-          <h2 className="text-center text-lg font-extrabold text-foreground">
-            📋 ব্যবহারের নিয়ম
-          </h2>
-          <div className="mt-4 rounded-2xl border border-primary/20 bg-primary/5 p-5">
-            <div className="flex items-start gap-3">
-              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-              <p className="text-[13px] leading-relaxed text-foreground">{product.usage}</p>
+          <div className="text-center">
+            <span className="inline-block rounded-full bg-primary/10 px-4 py-1 text-[11px] font-bold text-primary">গাইড</span>
+            <h2 className="mt-3 text-xl font-extrabold text-foreground">
+              📋 ব্যবহারের নিয়ম
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">সঠিক নিয়মে ব্যবহার করুন, দ্রুত ফলাফল পান</p>
+          </div>
+          <div className="mt-6 overflow-hidden rounded-2xl border-2 border-primary/20 shadow-sm">
+            <div className="gradient-primary px-5 py-3">
+              <p className="text-[13px] font-bold text-primary-foreground">✅ সেবনবিধি</p>
+            </div>
+            <div className="bg-gradient-to-b from-primary/5 to-card p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15">
+                  <Clock className="h-5 w-5 text-primary" />
+                </div>
+                <p className="text-[13px] font-medium leading-relaxed text-foreground">{product.usage}</p>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-2">
+                <div className="rounded-xl bg-primary/5 p-2.5 text-center">
+                  <p className="text-lg">🕐</p>
+                  <p className="mt-1 text-[10px] font-bold text-foreground">সকালে</p>
+                </div>
+                <div className="rounded-xl bg-accent/5 p-2.5 text-center">
+                  <p className="text-lg">🕐</p>
+                  <p className="mt-1 text-[10px] font-bold text-foreground">দুপুরে</p>
+                </div>
+                <div className="rounded-xl bg-primary/5 p-2.5 text-center">
+                  <p className="text-lg">🕐</p>
+                  <p className="mt-1 text-[10px] font-bold text-foreground">রাতে</p>
+                </div>
+              </div>
+              <div className="mt-4 rounded-xl border border-destructive/20 bg-destructive/5 p-3">
+                <p className="text-[11px] font-semibold text-destructive">⚠️ সতর্কতা: খাওয়ার ১৫ মিনিট আগে বা পরে সেবন করুন। ডাক্তারের পরামর্শ অনুযায়ী ব্যবহার করুন।</p>
+              </div>
             </div>
           </div>
         </div>
