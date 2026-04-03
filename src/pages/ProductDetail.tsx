@@ -75,12 +75,9 @@ const ProductDetail = () => {
 
           <p className="mt-4 text-sm text-foreground">{product.description}</p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6">
             <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(product); navigate("/checkout"); }}>
               <CreditCard className="h-4 w-4" /> এখনই অর্ডার করুন
-            </Button>
-            <Button size="lg" variant="outline" className="w-full gap-2" onClick={handleAdd}>
-              <ShoppingCart className="h-4 w-4" /> কার্টে যোগ করুন
             </Button>
           </div>
 
