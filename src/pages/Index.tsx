@@ -80,18 +80,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Offer banner */}
-      <section className="gradient-offer py-10">
-        <div className="container text-center">
-          <h2 className="text-2xl font-bold text-offer-foreground md:text-3xl">🔥 বিশেষ অফার!</h2>
-          <p className="mt-2 text-sm text-offer-foreground/90">
-            আজই অর্ডার করুন এবং পান ২০% পর্যন্ত ছাড়! সীমিত সময়ের জন্য।
-          </p>
-          <Button asChild size="lg" className="mt-4 bg-card text-foreground hover:bg-card/90">
-            <Link to="/products">এখনই কিনুন</Link>
-          </Button>
-        </div>
-      </section>
 
       {/* Doctor Consultation */}
       <section className="container py-12">
