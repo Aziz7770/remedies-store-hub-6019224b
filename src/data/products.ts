@@ -77,6 +77,7 @@ export const products: Product[] = [
     name: "নাক্স ভমিকা ৩০",
     nameEn: "Nux Vomica 30",
     price: 100,
+    originalPrice: 115,
     image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=400",
     category: "digestive",
     description: "হজম সমস্যা, গ্যাস, অম্বল ও পেটের বিভিন্ন সমস্যায় অত্যন্ত কার্যকর।",
