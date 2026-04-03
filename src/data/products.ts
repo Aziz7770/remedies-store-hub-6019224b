@@ -175,6 +175,7 @@ export const products: Product[] = [
     name: "ক্যালক ফস ৬X",
     nameEn: "Calc Phos 6X",
     price: 90,
+    originalPrice: 105,
     image: "https://images.unsplash.com/photo-1559757175-7cb057fba93c?w=400",
     category: "general",
     description: "হাড় ও দাঁতের স্বাস্থ্যের জন্য অত্যন্ত কার্যকর। শিশু ও বৃদ্ধদের জন্য বিশেষ উপযোগী।",
