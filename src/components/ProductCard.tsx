@@ -58,14 +58,9 @@ const ProductCard = ({ product }: { product: Product }) => {
               </span>
             )}
           </div>
-          <Button size="sm" className="h-8 gap-1 text-xs w-full" onClick={handleOrder}>
-            অর্ডার করুন
+          <Button size="sm" className="h-8 gap-1 text-xs" onClick={handleOrder}>
+            <CreditCard className="h-3 w-3" /> অর্ডার
           </Button>
-        </div>
-        <div className="mt-2 flex justify-between text-[9px] text-muted-foreground">
-          <span>✅ বিশ্বস্ত প্রতিষ্ঠান</span>
-          <span>🚚 দ্রুত ডেলিভারি</span>
-          <span>💵 COD</span>
         </div>
       </div>
     </div>
