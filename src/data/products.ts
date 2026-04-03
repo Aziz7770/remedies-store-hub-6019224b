@@ -57,6 +57,7 @@ export const products: Product[] = [
     name: "সালফার ২০০",
     nameEn: "Sulphur 200",
     price: 150,
+    originalPrice: 175,
     image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=400",
     category: "skin",
     description: "ত্বকের বিভিন্ন সমস্যা যেমন চুলকানি, একজিমা, দাদ ইত্যাদিতে অত্যন্ত কার্যকর।",
