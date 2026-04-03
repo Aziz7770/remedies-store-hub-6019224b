@@ -82,7 +82,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="mt-6 flex gap-4 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-primary" /> ১০০% আসল</span>
+            <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-primary" /> বিশ্বস্ত প্রতিষ্ঠান</span>
             <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-primary" /> দ্রুত ডেলিভারি</span>
             <span className="flex items-center gap-1"><CheckCircle className="h-3.5 w-3.5 text-primary" /> Cash on Delivery</span>
           </div>
