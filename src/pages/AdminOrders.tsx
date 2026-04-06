@@ -99,6 +99,14 @@ const AdminOrders = () => {
 
   const filtered = filter === "all" ? orders : orders.filter((o) => o.status === filter);
 
+  const totalPages = Math.ceil(filtered.length / ORDERS_PER_PAGE);
+  const paginatedOrders = filtered.slice((currentPage - 1) * ORDERS_PER_PAGE, currentPage * ORDERS_PER_PAGE);
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
   const counts = {
     all: orders.length,
     pending: orders.filter((o) => o.status === "pending").length,
