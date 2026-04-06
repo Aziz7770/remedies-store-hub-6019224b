@@ -185,7 +185,7 @@ export const products: Product[] = [
     solution: "এই ঔষধ ৩টি ধাপে কাজ করে: ১) হরমোনাল রি-ব্যালেন্স — ইস্ট্রোজেনের প্রভাব কমিয়ে টেস্টোস্টেরনের মাত্রা বাড়ায়। ২) লিপো-রিডাকশন — বুকের জেদি চর্বি ও গ্ল্যান্ডুলার টিস্যু ভেঙে পুরুষালি শেপে আনে। ৩) স্কিন টাইটানিং — ঝুলে যাওয়া চামড়া টানটান করে সুগঠিত চওড়া বুক দেয়। এছাড়া লিবিডো বুস্ট ও স্ট্যামিনা বাড়ায়।",
     benefits: ["বুকের অতিরিক্ত চর্বি কমায়", "হরমোন ব্যালেন্স করে", "টেস্টোস্টেরন লেভেল বাড়ায়", "জার্মানী হোমিওপ্যাথি ঔষধের কম্বিনেশন", "সম্পূর্ণ পার্শ্বপ্রতিক্রিয়া মুক্ত"],
     usage: "প্রতিদিন রাতে হাফ গ্লাস পরিমাণ পানির সাথে প্রত্যেকটা বোতল থেকে ১০ ফোটা করে ওষুধ মিশিয়ে সেবন করতে হবে।",
-    ingredients: "Gynecomastia Drop + Testo Balance Drop 30X",
+    ingredients: "Gynecomastia: Phytolacca Decandra, Ferrum Metallicum, Thuja Occidentalis। Testo Balance: Lycopodium Clavatum, Calcarea Carbonica, Baryta Carbonica।",
     rating: 4.9,
     reviews: 156,
     inStock: true,
