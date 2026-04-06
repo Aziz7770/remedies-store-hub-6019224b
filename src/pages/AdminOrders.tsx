@@ -1,8 +1,34 @@
 import { useState, useEffect } from "react";
-import { useOrders, OrderStatus } from "@/context/OrderContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Lock, Unlock, Package, Truck, XCircle, Clock, CheckCircle, Filter } from "lucide-react";
+import { Lock, Unlock, Package, Truck, XCircle, Clock, CheckCircle, Filter, RefreshCw } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+type OrderStatus = "pending" | "confirmed" | "delivered" | "cancelled";
+
+interface OrderItem {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  id: string;
+  order_id: string;
+  customer_name: string;
+  phone: string;
+  address: string;
+  note: string;
+  items: OrderItem[];
+  subtotal: number;
+  delivery_charge: number;
+  total: number;
+  status: OrderStatus;
+  locked: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: React.ReactNode }> = {
   pending: { label: "পেন্ডিং", color: "bg-yellow-100 text-yellow-800 border-yellow-300", icon: <Clock className="h-3.5 w-3.5" /> },
@@ -12,13 +38,61 @@ const statusConfig: Record<OrderStatus, { label: string; color: string; icon: Re
 };
 
 const AdminOrders = () => {
-  const { orders, updateStatus, toggleLock } = useOrders();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<OrderStatus | "all">("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  const fetchOrders = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast.error("অর্ডার লোড করতে সমস্যা হয়েছে");
+      console.error(error);
+    } else {
+      setOrders((data as unknown as Order[]) || []);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchOrders();
   }, []);
+
+  const updateStatus = async (orderId: string, status: OrderStatus) => {
+    const { error } = await supabase
+      .from("orders")
+      .update({ status, updated_at: new Date().toISOString() })
+      .eq("order_id", orderId);
+    if (error) {
+      toast.error("স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে");
+    } else {
+      setOrders((prev) =>
+        prev.map((o) => (o.order_id === orderId ? { ...o, status, updated_at: new Date().toISOString() } : o))
+      );
+      toast.success("স্ট্যাটাস আপডেট হয়েছে");
+    }
+  };
+
+  const toggleLock = async (orderId: string) => {
+    const order = orders.find((o) => o.order_id === orderId);
+    if (!order) return;
+    const { error } = await supabase
+      .from("orders")
+      .update({ locked: !order.locked, updated_at: new Date().toISOString() })
+      .eq("order_id", orderId);
+    if (error) {
+      toast.error("লক আপডেট করতে সমস্যা হয়েছে");
+    } else {
+      setOrders((prev) =>
+        prev.map((o) => (o.order_id === orderId ? { ...o, locked: !o.locked } : o))
+      );
+    }
+  };
 
   const filtered = filter === "all" ? orders : orders.filter((o) => o.status === filter);
 
@@ -41,7 +115,16 @@ const AdminOrders = () => {
     });
   };
 
-  if (orders.length === 0) {
+  if (loading) {
+    return (
+      <div className="container py-20 text-center">
+        <RefreshCw className="mx-auto h-10 w-10 animate-spin text-primary" />
+        <p className="mt-4 text-sm text-muted-foreground">অর্ডার লোড হচ্ছে...</p>
+      </div>
+    );
+  }
+
+  if (!loading && orders.length === 0) {
     return (
       <div className="container py-20 text-center">
         <Package className="mx-auto h-16 w-16 text-muted-foreground/50" />
@@ -58,7 +141,12 @@ const AdminOrders = () => {
           <Package className="h-6 w-6 text-primary" />
           অর্ডার ম্যানেজমেন্ট
         </h1>
-        <span className="text-sm text-muted-foreground">মোট: {orders.length}টি</span>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" onClick={fetchOrders} className="text-xs">
+            <RefreshCw className="h-3 w-3 mr-1" /> রিফ্রেশ
+          </Button>
+          <span className="text-sm text-muted-foreground">মোট: {orders.length}টি</span>
+        </div>
       </div>
 
       {/* Filter tabs */}
@@ -100,20 +188,20 @@ const AdminOrders = () => {
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono font-bold text-primary">{order.id}</span>
+                    <span className="text-xs font-mono font-bold text-primary">{order.order_id}</span>
                     {order.locked && <Lock className="h-3 w-3 text-yellow-600" />}
                   </div>
                   <p className="text-sm font-semibold text-foreground truncate">{order.customerName}</p>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {formatDate(order.createdAt)}
-                  </p>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {formatDate(order.created_at)}
+                    </p>
                 </div>
                 <div className="flex flex-col items-end gap-1.5">
                   <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold ${cfg.color}`}>
                     {cfg.icon} {cfg.label}
                   </span>
-                  <span className="text-sm font-bold text-primary">৳{order.total}</span>
+                      <span className="text-sm font-bold text-primary">৳{Number(order.total)}</span>
                 </div>
               </div>
 
@@ -150,15 +238,15 @@ const AdminOrders = () => {
                     <div className="border-t border-border pt-2 mt-2 space-y-1 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">সাবটোটাল</span>
-                        <span>৳{order.subtotal}</span>
+                        <span>৳{Number(order.subtotal)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">ডেলিভারি</span>
-                        <span>{order.deliveryCharge === 0 ? "ফ্রি" : `৳${order.deliveryCharge}`}</span>
+                        <span>{Number(order.delivery_charge) === 0 ? "ফ্রি" : `৳${Number(order.delivery_charge)}`}</span>
                       </div>
                       <div className="flex justify-between font-bold text-base">
                         <span>মোট</span>
-                        <span className="text-primary">৳{order.total}</span>
+                        <span className="text-primary">৳{Number(order.total)}</span>
                       </div>
                     </div>
                   </div>
@@ -170,7 +258,7 @@ const AdminOrders = () => {
                       <Button
                         size="sm"
                         variant={order.locked ? "default" : "outline"}
-                        onClick={() => toggleLock(order.id)}
+                        onClick={() => toggleLock(order.order_id)}
                         className="text-xs"
                       >
                         {order.locked ? <Lock className="h-3.5 w-3.5 mr-1" /> : <Unlock className="h-3.5 w-3.5 mr-1" />}
@@ -183,7 +271,7 @@ const AdminOrders = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => updateStatus(order.id, "confirmed")}
+                              onClick={() => updateStatus(order.order_id, "confirmed")}
                               className="text-xs border-blue-300 text-blue-700 hover:bg-blue-50"
                             >
                               <CheckCircle className="h-3.5 w-3.5 mr-1" /> কনফার্ম
@@ -193,7 +281,7 @@ const AdminOrders = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => updateStatus(order.id, "delivered")}
+                              onClick={() => updateStatus(order.order_id, "delivered")}
                               className="text-xs border-green-300 text-green-700 hover:bg-green-50"
                             >
                               <Truck className="h-3.5 w-3.5 mr-1" /> ডেলিভার্ড
@@ -203,7 +291,7 @@ const AdminOrders = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => updateStatus(order.id, "cancelled")}
+                              onClick={() => updateStatus(order.order_id, "cancelled")}
                               className="text-xs border-red-300 text-red-700 hover:bg-red-50"
                             >
                               <XCircle className="h-3.5 w-3.5 mr-1" /> ক্যান্সেল
