@@ -191,7 +191,7 @@ const AdminOrders = () => {
                     <span className="text-xs font-mono font-bold text-primary">{order.order_id}</span>
                     {order.locked && <Lock className="h-3 w-3 text-yellow-600" />}
                   </div>
-                  <p className="text-sm font-semibold text-foreground truncate">{order.customerName}</p>
+                  <p className="text-sm font-semibold text-foreground truncate">{order.customer_name}</p>
                     <p className="text-xs text-muted-foreground flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {formatDate(order.created_at)}
