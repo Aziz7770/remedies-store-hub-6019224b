@@ -321,6 +321,47 @@ const AdminOrders = () => {
           );
         })}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6 pb-4">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="text-xs"
+          >
+            ← আগের
+          </Button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`h-8 w-8 rounded-full text-xs font-medium transition-colors ${
+                currentPage === page
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card text-muted-foreground border border-border hover:bg-accent"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="text-xs"
+          >
+            পরের →
+          </Button>
+        </div>
+      )}
+
+      <p className="text-center text-xs text-muted-foreground pb-4">
+        মোট {filtered.length}টি অর্ডারের মধ্যে {(currentPage - 1) * ORDERS_PER_PAGE + 1}-{Math.min(currentPage * ORDERS_PER_PAGE, filtered.length)}টি দেখাচ্ছে
+      </p>
     </div>
   );
 };
