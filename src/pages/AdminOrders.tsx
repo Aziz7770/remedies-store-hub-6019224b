@@ -37,11 +37,14 @@ const statusConfig: Record<OrderStatus, { label: string; color: string; icon: Re
   cancelled: { label: "ক্যান্সেলড", color: "bg-red-100 text-red-800 border-red-300", icon: <XCircle className="h-3.5 w-3.5" /> },
 };
 
+const ORDERS_PER_PAGE = 10;
+
 const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<OrderStatus | "all">("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -95,6 +98,14 @@ const AdminOrders = () => {
   };
 
   const filtered = filter === "all" ? orders : orders.filter((o) => o.status === filter);
+
+  const totalPages = Math.ceil(filtered.length / ORDERS_PER_PAGE);
+  const paginatedOrders = filtered.slice((currentPage - 1) * ORDERS_PER_PAGE, currentPage * ORDERS_PER_PAGE);
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
 
   const counts = {
     all: orders.length,
@@ -170,7 +181,7 @@ const AdminOrders = () => {
 
       {/* Orders list */}
       <div className="space-y-3">
-        {filtered.map((order) => {
+        {paginatedOrders.map((order) => {
           const isExpanded = expandedId === order.id;
           const cfg = statusConfig[order.status];
 
@@ -310,6 +321,47 @@ const AdminOrders = () => {
           );
         })}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6 pb-4">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="text-xs"
+          >
+            ← আগের
+          </Button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`h-8 w-8 rounded-full text-xs font-medium transition-colors ${
+                currentPage === page
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card text-muted-foreground border border-border hover:bg-accent"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="text-xs"
+          >
+            পরের →
+          </Button>
+        </div>
+      )}
+
+      <p className="text-center text-xs text-muted-foreground pb-4">
+        মোট {filtered.length}টি অর্ডারের মধ্যে {(currentPage - 1) * ORDERS_PER_PAGE + 1}-{Math.min(currentPage * ORDERS_PER_PAGE, filtered.length)}টি দেখাচ্ছে
+      </p>
     </div>
   );
 };
