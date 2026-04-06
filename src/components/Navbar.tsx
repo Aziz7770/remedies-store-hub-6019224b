@@ -15,6 +15,7 @@ const Navbar = () => {
     { to: "/consultation", label: "ডাক্তার পরামর্শ" },
     { to: "/about", label: "আমাদের সম্পর্কে" },
     { to: "/contact", label: "যোগাযোগ" },
+    { to: "/admin/orders", label: "📦 অর্ডার দেখুন" },
   ];
 
   return (
