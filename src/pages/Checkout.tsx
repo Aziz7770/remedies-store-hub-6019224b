@@ -5,17 +5,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/context/CartContext";
-import { useOrders } from "@/context/OrderContext";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const OWNER_WHATSAPP = "8801767678562";
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
-  const { addOrder } = useOrders();
   const navigate = useNavigate();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const orderItemsRef = useRef(items);
 
   useEffect(() => {
@@ -30,8 +30,11 @@ const Checkout = () => {
     }
   }, [submitted]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
     const phone = formData.get("phone") as string;
@@ -43,7 +46,35 @@ const Checkout = () => {
     const currentTotal = currentItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
     const currentDelivery = currentTotal >= 500 ? 0 : 60;
 
+    const orderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
+
+    // Save to database
+    const { error } = await supabase.from("orders").insert({
+      order_id: orderId,
+      customer_name: name,
+      phone,
+      address,
+      note: note || "",
+      items: currentItems.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.product.price,
+      })),
+      subtotal: currentTotal,
+      delivery_charge: currentDelivery,
+      total: currentTotal + currentDelivery,
+    });
+
+    if (error) {
+      console.error("Order save error:", error);
+      toast.error("অর্ডার সেভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      setSubmitting(false);
+      return;
+    }
+
+    // Build WhatsApp message
     let message = `🛒 *নতুন অর্ডার!*\n\n`;
+    message += `🆔 *অর্ডার:* ${orderId}\n`;
     message += `👤 *নাম:* ${name}\n`;
     message += `📞 *ফোন:* ${phone}\n`;
     message += `📍 *ঠিকানা:* ${address}\n`;
@@ -59,22 +90,6 @@ const Checkout = () => {
 
     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
-
-    // Save order to local storage
-    addOrder({
-      customerName: name,
-      phone,
-      address,
-      note: note || "",
-      items: currentItems.map((item) => ({
-        name: item.product.name,
-        quantity: item.quantity,
-        price: item.product.price,
-      })),
-      subtotal: currentTotal,
-      deliveryCharge: currentDelivery,
-      total: currentTotal + currentDelivery,
-    });
 
     setSubmitted(true);
     clearCart();
@@ -132,7 +147,9 @@ const Checkout = () => {
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="w-full">অর্ডার কনফার্ম করুন</Button>
+          <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+            {submitting ? "প্রসেস হচ্ছে..." : "অর্ডার কনফার্ম করুন"}
+          </Button>
         </form>
 
         {/* Order summary */}
