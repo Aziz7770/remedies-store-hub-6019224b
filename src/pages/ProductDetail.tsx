@@ -152,7 +152,7 @@ const ProductDetail = () => {
             </Button>
           </div>
         </div>
-      )
+      )}
 
       {/* Reviews Section */}
       {reviews.length > 0 && (
