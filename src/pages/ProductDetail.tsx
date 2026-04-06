@@ -111,6 +111,49 @@ const ProductDetail = () => {
         </div>
       </div>
 
+      {/* How it works - only for gynecomastia */}
+      {product.id === "gynecomastia-combo" && (
+        <div className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-foreground">এই ঔষধ কীভাবে কাজ করে?</h2>
+          <p className="text-sm text-foreground">
+            এই ঔষধ আপনার বুকের টিস্যু এবং চর্বির ওপর সরাসরি <strong>৩টি ধাপে</strong> কাজ করবে:
+          </p>
+
+          <div className="rounded-xl border border-border bg-card p-5 space-y-2">
+            <h3 className="font-semibold text-primary">🔬 হরমোনাল রি-ব্যালেন্স</h3>
+            <p className="text-sm text-foreground">এটি শরীরে ইস্ট্রোজেনের (স্ত্রী হরমোন) প্রভাব কমিয়ে টেস্টোস্টেরনের মাত্রা বাড়াবে, যা স্তন বৃদ্ধি স্থায়ীভাবে থামিয়ে দেবে।</p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-5 space-y-2">
+            <h3 className="font-semibold text-primary">🔥 লিপো-রিডাকশন (চর্বি ক্ষয়)</h3>
+            <p className="text-sm text-foreground">বুকের চারপাশে জমে থাকা জেদি চর্বি কোষগুলোকে ভেঙে দ্রুত পুরুষালি শেপে নিয়ে আসবে।</p>
+            <p className="text-sm text-foreground">স্তনের নিচে জমে থাকা শক্ত গ্রন্থি বা গ্ল্যান্ডুলার টিস্যুগুলোকে (Glandular Tissue) এই ঔষধটি ভেতর থেকে নরম করে সংকুচিত করে নিয়ে আসবে।</p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-5 space-y-2">
+            <h3 className="font-semibold text-primary">✨ স্কিন টাইটানিং</h3>
+            <p className="text-sm text-foreground">বুকের চারপাশের জেদি চর্বি গলিয়ে ফেলে এবং ঝুলে যাওয়া চামড়া টানটান (Skin Tightening) করে বুককে একটি সুগঠিত ও চওড়া পুরুষালি শেপ দেবে।</p>
+            <p className="text-sm text-foreground">চর্বি কমার পর চামড়া যেন ঝুলে না যায়, বরং টানটান হয়ে মাসল বা পেশির সাথে মিশে যায় তা নিশ্চিত করে।</p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-5 space-y-2">
+            <h3 className="font-semibold text-primary">💪 অভ্যন্তরীণ শক্তি</h3>
+            <p className="text-sm text-foreground">এই ঔষধ আপনার পুরুষত্বকে আরও সুসংহত করবে।</p>
+            <p className="text-sm text-foreground"><strong>লিবিডো বুস্টার:</strong> এটি প্রাকৃতিকভাবে কামেচ্ছা এবং মানসিক উদ্যম বাড়িয়ে দিবে।</p>
+            <p className="text-sm text-foreground"><strong>স্ট্যামিনা ও ভাইটালিটি:</strong> শারীরিক ক্লান্তি দূর করে আপনাকে আগের চেয়ে অনেক বেশি এনার্জেটিক এবং আত্মবিশ্বাসী করে তুলবে।</p>
+          </div>
+
+          <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-5 text-center space-y-3">
+            <p className="text-sm text-foreground">
+              হাজারো মানুষ আমাদের এই ঔষধ ব্যবহার করে আজ আত্মবিশ্বাসের সাথে টি-শার্ট পরে বাইরে বের হতে পারছেন এবং একটি আত্মবিশ্বাসি জীবন উপভোগ করছেন। আপনিও যদি দ্রুত এই সমস্যা থেকে মুক্তি পেতে চান, তবে দেরি না করে আজই অর্ডার করুন।
+            </p>
+            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(product); navigate("/checkout"); }}>
+              <CreditCard className="h-4 w-4" /> এখনই অর্ডার করুন
+            </Button>
+          </div>
+        </div>
+      )
+
       {/* Reviews Section */}
       {reviews.length > 0 && (
         <div className="mt-10">
