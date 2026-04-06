@@ -181,7 +181,7 @@ const AdminOrders = () => {
 
       {/* Orders list */}
       <div className="space-y-3">
-        {filtered.map((order) => {
+        {paginatedOrders.map((order) => {
           const isExpanded = expandedId === order.id;
           const cfg = statusConfig[order.status];
 
