@@ -37,11 +37,14 @@ const statusConfig: Record<OrderStatus, { label: string; color: string; icon: Re
   cancelled: { label: "ক্যান্সেলড", color: "bg-red-100 text-red-800 border-red-300", icon: <XCircle className="h-3.5 w-3.5" /> },
 };
 
+const ORDERS_PER_PAGE = 10;
+
 const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<OrderStatus | "all">("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchOrders = async () => {
     setLoading(true);
