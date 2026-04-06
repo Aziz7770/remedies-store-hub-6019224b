@@ -1,4 +1,7 @@
 import gynecomastiaComboImg from "@/assets/gynecomastia-combo.jpg";
+import lycopodiumQImg from "@/assets/lycopodium-q.jpg";
+import damiana1xImg from "@/assets/damiana-1x.jpg";
+import cydoniaVulgarisImg from "@/assets/cydonia-vulgaris.jpg";
 
 export interface Product {
   id: string;
