@@ -22,6 +22,7 @@ import Terms from "./pages/Terms";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import NotFound from "./pages/NotFound";
 import AdminOrders from "./pages/AdminOrders";
+import AdminProducts from "./pages/AdminProducts";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ const App = () => (
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/return-policy" element={<ReturnPolicy />} />
                     <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/products" element={<AdminProducts />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                   <Footer />
