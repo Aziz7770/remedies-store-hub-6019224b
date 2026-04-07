@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { products, testimonials } from "@/data/products";
+import { useProducts, toOldProduct } from "@/hooks/useProducts";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 
@@ -15,6 +15,7 @@ const ProductLanding = () => {
   const { slug } = useParams();
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const { products, loading } = useProducts();
   const product = products.find((p) => p.slug === slug);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [viewers] = useState(Math.floor(Math.random() * 30) + 15);
@@ -22,6 +23,14 @@ const ProductLanding = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -34,21 +43,22 @@ const ProductLanding = () => {
     );
   }
 
-  const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const old = toOldProduct(product);
+
+  const discount = product.original_price
+    ? Math.round(((Number(product.original_price) - Number(product.price)) / Number(product.original_price)) * 100)
     : 0;
 
   const handleOrder = () => {
-    addToCart(product);
+    addToCart(old);
     toast.success("অর্ডার প্রস্তুত! আপনার তথ্য দিন।");
     navigate("/checkout");
   };
 
-  const relatedTestimonials = testimonials.filter(
-    (t) => t.product === product.name || t.product === product.nameEn
-  );
-  const displayTestimonials = relatedTestimonials.length > 0 ? relatedTestimonials : testimonials.slice(0, 3);
-
+  const testimonials = [
+    { id: 1, name: "আব্দুল করিম", location: "ঢাকা", text: "দারুণ ফলাফল পেয়েছি!", rating: 5, product: product.name },
+  ];
+  const displayTestimonials = testimonials;
   const whatsappNumber = "8801767678562";
   const whatsappMessage = encodeURIComponent(`আমি ${product.name} সম্পর্কে জানতে চাই।`);
 
@@ -107,7 +117,7 @@ const ProductLanding = () => {
           {/* Product Image */}
           <div className="relative mx-auto mt-5 h-48 w-48">
             <img
-              src={product.image}
+              src={product.image_url}
               alt={product.name}
               className="h-full w-full rounded-2xl object-cover shadow-lg"
               loading="eager"
@@ -127,8 +137,8 @@ const ProductLanding = () => {
           {/* Price */}
           <div className="mt-5 flex items-center justify-center gap-3">
             <span className="text-3xl font-extrabold text-foreground">৳{product.price}</span>
-            {product.originalPrice && (
-              <span className="text-base text-muted-foreground line-through">৳{product.originalPrice}</span>
+            {product.original_price && (
+              <span className="text-base text-muted-foreground line-through">৳{product.original_price}</span>
             )}
             {discount > 0 && (
               <span className="rounded-md bg-destructive px-2 py-0.5 text-xs font-bold text-destructive-foreground">
@@ -342,7 +352,7 @@ const ProductLanding = () => {
               <Star key={i} className="h-5 w-5 fill-gold text-gold" />
             ))}
             <span className="ml-1.5 text-xs font-bold text-foreground">{product.rating}</span>
-            <span className="text-xs text-muted-foreground">({product.reviews}+ রিভিউ)</span>
+            <span className="text-xs text-muted-foreground">({product.reviews_count}+ রিভিউ)</span>
           </div>
 
           <div className="mt-5 space-y-3">
@@ -390,7 +400,7 @@ const ProductLanding = () => {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15">
                   <Clock className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-[13px] font-medium leading-relaxed text-foreground">{product.usage}</p>
+                <p className="text-[13px] font-medium leading-relaxed text-foreground">{product.usage_info}</p>
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2">
                 <div className="rounded-xl bg-primary/5 p-2.5 text-center">
@@ -424,8 +434,8 @@ const ProductLanding = () => {
             )}
             <div className="mt-2 flex items-baseline justify-center gap-2">
               <span className="text-3xl font-extrabold">৳{product.price}</span>
-              {product.originalPrice && (
-                <span className="text-base opacity-60 line-through">৳{product.originalPrice}</span>
+              {product.original_price && (
+                <span className="text-base opacity-60 line-through">৳{product.original_price}</span>
               )}
             </div>
             <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] opacity-90">
@@ -517,8 +527,8 @@ const ProductLanding = () => {
           <div className="flex-1">
             <div className="flex items-baseline gap-1.5">
               <span className="text-xl font-extrabold text-primary">৳{product.price}</span>
-              {product.originalPrice && (
-                <span className="text-xs text-muted-foreground line-through">৳{product.originalPrice}</span>
+              {product.original_price && (
+                <span className="text-xs text-muted-foreground line-through">৳{product.original_price}</span>
               )}
             </div>
             <p className="text-[10px] text-muted-foreground">💵 Cash on Delivery</p>

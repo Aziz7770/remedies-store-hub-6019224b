@@ -1,8 +1,8 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ShoppingCart, Star, ArrowLeft, CheckCircle, CreditCard } from "lucide-react";
+import { Star, ArrowLeft, CheckCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { products, productReviews } from "@/data/products";
+import { useProducts, useProductReviews, toOldProduct } from "@/hooks/useProducts";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
@@ -10,11 +10,21 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === id);
+  const { products, loading } = useProducts();
+  const product = products.find((p) => p.product_id === id);
+  const reviews = useProductReviews(id || "");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="container py-20 text-center">
+        <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -25,15 +35,16 @@ const ProductDetail = () => {
     );
   }
 
+  const old = toOldProduct(product);
+
   const handleAdd = () => {
-    addToCart(product);
+    addToCart(old);
     toast.success(`${product.name} কার্টে যোগ হয়েছে!`);
   };
 
-  const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discount = product.original_price
+    ? Math.round(((Number(product.original_price) - Number(product.price)) / Number(product.original_price)) * 100)
     : 0;
-  const reviews = productReviews[product.id] || [];
 
   return (
     <div className="container py-8">
@@ -42,12 +53,10 @@ const ProductDetail = () => {
       </Link>
 
       <div className="mt-6 grid gap-8 md:grid-cols-2">
-        {/* Image */}
         <div className="overflow-hidden rounded-2xl border border-border bg-secondary">
-          <img src={product.image} alt={product.name} className="w-full object-cover aspect-square" />
+          <img src={product.image_url} alt={product.name} className="w-full object-cover aspect-square" />
         </div>
 
-        {/* Info */}
         <div>
           {discount > 0 && (
             <span className="inline-block rounded-full bg-offer px-3 py-1 text-xs font-bold text-offer-foreground">
@@ -55,28 +64,28 @@ const ProductDetail = () => {
             </span>
           )}
           <h1 className="mt-2 text-2xl font-bold text-foreground md:text-3xl">{product.name}</h1>
-          <p className="text-sm text-muted-foreground">{product.nameEn}</p>
+          <p className="text-sm text-muted-foreground">{product.name_en}</p>
 
           <div className="mt-2 flex items-center gap-2">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-gold text-gold" : "text-border"}`} />
+                <Star key={i} className={`h-4 w-4 ${i < Math.floor(Number(product.rating)) ? "fill-gold text-gold" : "text-border"}`} />
               ))}
             </div>
-            <span className="text-sm text-muted-foreground">({product.reviews} রিভিউ)</span>
+            <span className="text-sm text-muted-foreground">({product.reviews_count} রিভিউ)</span>
           </div>
 
           <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-primary">৳{product.price}</span>
-            {product.originalPrice && (
-              <span className="text-lg text-muted-foreground line-through">৳{product.originalPrice}</span>
+            <span className="text-3xl font-bold text-primary">৳{Number(product.price)}</span>
+            {product.original_price && (
+              <span className="text-lg text-muted-foreground line-through">৳{Number(product.original_price)}</span>
             )}
           </div>
 
           <p className="mt-4 text-sm text-foreground">{product.description}</p>
 
           <div className="mt-6">
-            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(product); navigate("/checkout"); }}>
+            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(old); navigate("/checkout"); }}>
               <CreditCard className="h-4 w-4" /> এখনই অর্ডার করুন
             </Button>
           </div>
@@ -103,7 +112,7 @@ const ProductDetail = () => {
         </div>
         <div className="rounded-xl border border-border bg-card p-5">
           <h3 className="font-semibold text-foreground">ব্যবহারের নিয়ম</h3>
-          <p className="mt-3 text-sm text-foreground">{product.usage}</p>
+          <p className="mt-3 text-sm text-foreground">{product.usage_info}</p>
         </div>
         <div className="rounded-xl border border-border bg-card p-5">
           <h3 className="font-semibold text-foreground">উপাদান</h3>
@@ -112,42 +121,36 @@ const ProductDetail = () => {
       </div>
 
       {/* How it works - only for gynecomastia */}
-      {product.id === "gynecomastia-combo" && (
+      {product.product_id === "gynecomastia-combo" && (
         <div className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-foreground">এই ঔষধ কীভাবে কাজ করে?</h2>
           <p className="text-sm text-foreground">
             এই ঔষধ আপনার বুকের টিস্যু এবং চর্বির ওপর সরাসরি <strong>৩টি ধাপে</strong> কাজ করবে:
           </p>
-
           <div className="rounded-xl border border-border bg-card p-5 space-y-2">
             <h3 className="font-semibold text-primary">🔬 হরমোনাল রি-ব্যালেন্স</h3>
             <p className="text-sm text-foreground">এটি শরীরে ইস্ট্রোজেনের (স্ত্রী হরমোন) প্রভাব কমিয়ে টেস্টোস্টেরনের মাত্রা বাড়াবে, যা স্তন বৃদ্ধি স্থায়ীভাবে থামিয়ে দেবে।</p>
           </div>
-
           <div className="rounded-xl border border-border bg-card p-5 space-y-2">
             <h3 className="font-semibold text-primary">🔥 লিপো-রিডাকশন (চর্বি ক্ষয়)</h3>
             <p className="text-sm text-foreground">বুকের চারপাশে জমে থাকা জেদি চর্বি কোষগুলোকে ভেঙে দ্রুত পুরুষালি শেপে নিয়ে আসবে।</p>
             <p className="text-sm text-foreground">স্তনের নিচে জমে থাকা শক্ত গ্রন্থি বা গ্ল্যান্ডুলার টিস্যুগুলোকে (Glandular Tissue) এই ঔষধটি ভেতর থেকে নরম করে সংকুচিত করে নিয়ে আসবে।</p>
           </div>
-
           <div className="rounded-xl border border-border bg-card p-5 space-y-2">
             <h3 className="font-semibold text-primary">✨ স্কিন টাইটানিং</h3>
             <p className="text-sm text-foreground">বুকের চারপাশের জেদি চর্বি গলিয়ে ফেলে এবং ঝুলে যাওয়া চামড়া টানটান (Skin Tightening) করে বুককে একটি সুগঠিত ও চওড়া পুরুষালি শেপ দেবে।</p>
-            <p className="text-sm text-foreground">চর্বি কমার পর চামড়া যেন ঝুলে না যায়, বরং টানটান হয়ে মাসল বা পেশির সাথে মিশে যায় তা নিশ্চিত করে।</p>
           </div>
-
           <div className="rounded-xl border border-border bg-card p-5 space-y-2">
             <h3 className="font-semibold text-primary">💪 অভ্যন্তরীণ শক্তি</h3>
             <p className="text-sm text-foreground">এই ঔষধ আপনার পুরুষত্বকে আরও সুসংহত করবে।</p>
             <p className="text-sm text-foreground"><strong>লিবিডো বুস্টার:</strong> এটি প্রাকৃতিকভাবে কামেচ্ছা এবং মানসিক উদ্যম বাড়িয়ে দিবে।</p>
             <p className="text-sm text-foreground"><strong>স্ট্যামিনা ও ভাইটালিটি:</strong> শারীরিক ক্লান্তি দূর করে আপনাকে আগের চেয়ে অনেক বেশি এনার্জেটিক এবং আত্মবিশ্বাসী করে তুলবে।</p>
           </div>
-
           <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-5 text-center space-y-3">
             <p className="text-sm text-foreground">
-              হাজারো মানুষ আমাদের এই ঔষধ ব্যবহার করে আজ আত্মবিশ্বাসের সাথে টি-শার্ট পরে বাইরে বের হতে পারছেন এবং একটি আত্মবিশ্বাসি জীবন উপভোগ করছেন। আপনিও যদি দ্রুত এই সমস্যা থেকে মুক্তি পেতে চান, তবে দেরি না করে আজই অর্ডার করুন।
+              হাজারো মানুষ আমাদের এই ঔষধ ব্যবহার করে আজ আত্মবিশ্বাসের সাথে টি-শার্ট পরে বাইরে বের হতে পারছেন। আপনিও যদি দ্রুত এই সমস্যা থেকে মুক্তি পেতে চান, তবে দেরি না করে আজই অর্ডার করুন।
             </p>
-            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(product); navigate("/checkout"); }}>
+            <Button size="lg" className="w-full gap-2 bg-offer text-offer-foreground hover:bg-offer/90" onClick={() => { addToCart(old); navigate("/checkout"); }}>
               <CreditCard className="h-4 w-4" /> এখনই অর্ডার করুন
             </Button>
           </div>
@@ -159,15 +162,15 @@ const ProductDetail = () => {
         <div className="mt-10">
           <h2 className="text-xl font-bold text-foreground">কাস্টমার রিভিউ ({reviews.length})</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((review, i) => (
-              <div key={i} className="rounded-xl border border-border bg-card p-5 shadow-card">
+            {reviews.map((review) => (
+              <div key={review.id} className="rounded-xl border border-border bg-card p-5 shadow-card">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, j) => (
                       <Star key={j} className={`h-4 w-4 ${j < review.rating ? "fill-gold text-gold" : "text-border"}`} />
                     ))}
                   </div>
-                  <span className="text-xs text-muted-foreground">{review.date}</span>
+                  <span className="text-xs text-muted-foreground">{review.review_date}</span>
                 </div>
                 <p className="mt-3 text-sm text-foreground">"{review.text}"</p>
                 <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">

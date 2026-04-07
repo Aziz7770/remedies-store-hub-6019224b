@@ -3,12 +3,21 @@ import { ArrowRight, Star, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import TrustBadges from "@/components/TrustBadges";
-import { products, categories, testimonials } from "@/data/products";
+import { useProducts, toOldProduct } from "@/hooks/useProducts";
 import heroBanner from "@/assets/hero-banner.jpg";
 import doctorImg from "@/assets/doctor-consultation.jpg";
 
 const Index = () => {
+  const { products, categories, loading } = useProducts();
   const featuredProducts = products.filter((p) => p.featured);
+
+  // Get testimonials from the old data for now (still available)
+  const testimonials = [
+    { id: 1, name: "আব্দুল করিম", location: "ঢাকা", text: "আর্নিকা মন্টানা ব্যবহার করে পেশী ব্যথা থেকে মুক্তি পেয়েছি!", rating: 5, product: "আর্নিকা মন্টানা ৩০" },
+    { id: 2, name: "ফাতেমা খাতুন", location: "রাজশাহী", text: "নাক্স ভমিকা গ্যাসের সমস্যায় ম্যাজিকের মতো কাজ করেছে!", rating: 5, product: "নাক্স ভমিকা ৩০" },
+    { id: 3, name: "করিম উদ্দিন", location: "চট্টগ্রাম", text: "৩ মাসে চুল পড়া অনেক কমেছে। দারুণ ফলাফল!", rating: 5, product: "জাবোরান্ডি Q" },
+    { id: 4, name: "রহিমা বেগম", location: "ঢাকা", text: "দীর্ঘদিনের চুলকানি সমস্যা সম্পূর্ণ সেরে গেছে!", rating: 5, product: "সালফার ২০০" },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -74,12 +83,11 @@ const Index = () => {
           </div>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {featuredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.product_id} product={toOldProduct(p)} />
             ))}
           </div>
         </div>
       </section>
-
 
       {/* Doctor Consultation */}
       <section className="container py-12">
