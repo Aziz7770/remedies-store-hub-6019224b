@@ -57,7 +57,8 @@ const ProductLanding = () => {
 
   const testimonials = [
     { id: 1, name: "আব্দুল করিম", location: "ঢাকা", text: "দারুণ ফলাফল পেয়েছি!", rating: 5, product: product.name },
-
+  ];
+  const displayTestimonials = testimonials;
   const whatsappNumber = "8801767678562";
   const whatsappMessage = encodeURIComponent(`আমি ${product.name} সম্পর্কে জানতে চাই।`);
 
