@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          color: string
+          created_at: string
+          icon: string
+          id: string
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          icon?: string
+          id: string
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          icon?: string
+          id?: string
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           address: string
@@ -62,6 +89,119 @@ export type Database = {
           subtotal?: number
           total?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      product_reviews: {
+        Row: {
+          created_at: string
+          id: string
+          location: string
+          name: string
+          product_id: string
+          rating: number
+          review_date: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location?: string
+          name: string
+          product_id: string
+          rating?: number
+          review_date?: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string
+          name?: string
+          product_id?: string
+          rating?: number
+          review_date?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["product_id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          benefits: Json
+          category: string
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          image_url: string
+          in_stock: boolean
+          ingredients: string
+          name: string
+          name_en: string
+          original_price: number | null
+          price: number
+          problem: string
+          product_id: string
+          rating: number
+          reviews_count: number
+          slug: string
+          solution: string
+          updated_at: string
+          usage_info: string
+        }
+        Insert: {
+          benefits?: Json
+          category?: string
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          image_url?: string
+          in_stock?: boolean
+          ingredients?: string
+          name: string
+          name_en?: string
+          original_price?: number | null
+          price?: number
+          problem?: string
+          product_id: string
+          rating?: number
+          reviews_count?: number
+          slug: string
+          solution?: string
+          updated_at?: string
+          usage_info?: string
+        }
+        Update: {
+          benefits?: Json
+          category?: string
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          image_url?: string
+          in_stock?: boolean
+          ingredients?: string
+          name?: string
+          name_en?: string
+          original_price?: number | null
+          price?: number
+          problem?: string
+          product_id?: string
+          rating?: number
+          reviews_count?: number
+          slug?: string
+          solution?: string
+          updated_at?: string
+          usage_info?: string
         }
         Relationships: []
       }
