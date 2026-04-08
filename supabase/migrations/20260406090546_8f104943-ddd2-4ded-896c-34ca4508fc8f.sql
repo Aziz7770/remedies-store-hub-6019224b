@@ -9,7 +9,7 @@ CREATE TABLE public.orders (
   note TEXT DEFAULT '',
   items JSONB NOT NULL DEFAULT '[]',
   subtotal NUMERIC NOT NULL DEFAULT 0,
-  dyeliver_charge NUMERIC NOT NULL DEFAULT 0,
+  delivery_charge NUMERIC NOT NULL DEFAULT 0,
   total NUMERIC NOT NULL DEFAULT 0,
   status TEXT NOT NULL DEFAULT 'pending',
   locked BOOLEAN NOT NULL DEFAULT false,
