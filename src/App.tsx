@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
-import ProductLanding from "./pages/ProductLanding";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Consultation from "./pages/Consultation";
@@ -20,10 +19,19 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import ReturnPolicy from "./pages/ReturnPolicy";
-import NotFound from "./pages/NotFound";
 import AdminOrders from "./pages/AdminOrders";
+import SlugRouter from "./components/SlugRouter";
 
 const queryClient = new QueryClient();
+
+const MainLayout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <Navbar />
+    {children}
+    <Footer />
+    <WhatsAppButton />
+  </>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -34,35 +42,22 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Main website with navbar & footer */}
-            <Route
-              path="*"
-              element={
-                <>
-                  <Navbar />
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/consultation" element={<Consultation />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="/return-policy" element={<ReturnPolicy />} />
-                    <Route path="/admin/orders" element={<AdminOrders />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                  <Footer />
-                  <WhatsAppButton />
-                </>
-              }
-            />
+            {/* Main pages with navbar & footer */}
+            <Route path="/" element={<MainLayout><Index /></MainLayout>} />
+            <Route path="/products" element={<MainLayout><Products /></MainLayout>} />
+            <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+            <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+            <Route path="/checkout" element={<MainLayout><Checkout /></MainLayout>} />
+            <Route path="/consultation" element={<MainLayout><Consultation /></MainLayout>} />
+            <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+            <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
+            <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
+            <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
+            <Route path="/return-policy" element={<MainLayout><ReturnPolicy /></MainLayout>} />
+            <Route path="/admin/orders" element={<MainLayout><AdminOrders /></MainLayout>} />
 
-            {/* Product landing pages — standalone, short URL /:slug */}
-            <Route path="/:slug" element={<ProductLanding />} />
+            {/* Short URL: /:slug → product landing (standalone) or 404 */}
+            <Route path="/:slug" element={<SlugRouter />} />
           </Routes>
         </BrowserRouter>
         </OrderProvider>
