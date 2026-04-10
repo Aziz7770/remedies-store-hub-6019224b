@@ -12,7 +12,7 @@ const WhatsAppButton = () => {
       className="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110"
       aria-label="WhatsApp এ যোগাযোগ করুন"
     >
-      <img src={whatsappLogo} alt="WhatsApp" className="h-14 w-14 drop-shadow-lg" />
+      <img src={whatsappLogo} alt="WhatsApp" className="h-16 w-16 drop-shadow-lg rounded-full" />
     </a>
   );
 };
