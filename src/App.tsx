@@ -34,9 +34,6 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Landing pages — standalone, no navbar/footer */}
-            <Route path="/offer/:slug" element={<ProductLanding />} />
-
             {/* Main website with navbar & footer */}
             <Route
               path="*"
@@ -63,6 +60,9 @@ const App = () => (
                 </>
               }
             />
+
+            {/* Product landing pages — standalone, short URL /:slug */}
+            <Route path="/:slug" element={<ProductLanding />} />
           </Routes>
         </BrowserRouter>
         </OrderProvider>
