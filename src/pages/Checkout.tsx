@@ -21,6 +21,12 @@ const Checkout = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (items.length > 0) {
+      trackInitiateCheckout(
+        items.map((i) => ({ id: i.product.id, name: i.product.name, price: i.product.price, quantity: i.quantity })),
+        totalPrice
+      );
+    }
   }, []);
 
   const deliveryCharge = totalPrice >= 500 ? 0 : 60;
