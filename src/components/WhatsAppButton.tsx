@@ -7,6 +7,7 @@ const WhatsAppButton = () => {
 
   return (
     <a
+      onClick={() => trackContact()}
       href={`https://wa.me/${phoneNumber}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
