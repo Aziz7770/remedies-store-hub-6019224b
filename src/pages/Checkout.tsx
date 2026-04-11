@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackInitiateCheckout, trackCompletePayment } from "@/lib/tracking";
 
 const OWNER_WHATSAPP = "8801767678562";
 

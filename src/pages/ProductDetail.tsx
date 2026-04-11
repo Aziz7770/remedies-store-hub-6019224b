@@ -5,6 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { products, productReviews } from "@/data/products";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { trackViewContent, trackAddToCart } from "@/lib/tracking";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -14,7 +15,10 @@ const ProductDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+    if (product) {
+      trackViewContent({ id: product.id, name: product.name, price: product.price, category: product.category });
+    }
+  }, [id, product]);
 
   if (!product) {
     return (
@@ -27,6 +31,7 @@ const ProductDetail = () => {
 
   const handleAdd = () => {
     addToCart(product);
+    trackAddToCart({ id: product.id, name: product.name, price: product.price, category: product.category });
     toast.success(`${product.name} কার্টে যোগ হয়েছে!`);
   };
 

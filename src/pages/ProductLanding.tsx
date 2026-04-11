@@ -10,6 +10,7 @@ import { useCart } from "@/context/CartContext";
 import { products, testimonials } from "@/data/products";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
+import { trackViewContent, trackAddToCart } from "@/lib/tracking";
 
 const ProductLanding = () => {
   const { slug } = useParams();
@@ -21,7 +22,10 @@ const ProductLanding = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
+    if (product) {
+      trackViewContent({ id: product.id, name: product.name, price: product.price, category: product.category });
+    }
+  }, [slug, product]);
 
   if (!product) {
     return (
