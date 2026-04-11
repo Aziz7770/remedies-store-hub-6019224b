@@ -170,9 +170,14 @@ const Checkout = () => {
           <h3 className="font-semibold text-foreground">আপনার অর্ডার</h3>
           <div className="mt-4 space-y-3">
             {items.map((item) => (
-              <div key={item.product.id} className="flex justify-between text-sm">
-                <span className="text-foreground">{item.product.name} × {item.quantity}</span>
-                <span className="text-foreground">৳{item.product.price * item.quantity}</span>
+              <div key={item.product.id} className="flex items-center gap-3 text-sm">
+                <img
+                  src={item.product.image}
+                  alt={item.product.name}
+                  className="h-10 w-10 rounded-md object-cover border border-border flex-shrink-0"
+                />
+                <span className="flex-1 text-foreground line-clamp-2">{item.product.name} × {item.quantity}</span>
+                <span className="text-foreground font-medium flex-shrink-0">৳{item.product.price * item.quantity}</span>
               </div>
             ))}
           </div>
