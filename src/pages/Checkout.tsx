@@ -79,24 +79,32 @@ const Checkout = () => {
       return;
     }
 
-    // Build WhatsApp message
-    let message = `🛒 *নতুন অর্ডার!*\n\n`;
-    message += `🆔 *অর্ডার:* ${orderId}\n`;
-    message += `👤 *নাম:* ${name}\n`;
-    message += `📞 *ফোন:* ${phone}\n`;
-    message += `📍 *ঠিকানা:* ${address}\n`;
-    if (note) message += `📝 *নোট:* ${note}\n`;
-    message += `\n📦 *পণ্যসমূহ:*\n`;
-    currentItems.forEach((item) => {
-      message += `• ${item.product.name} × ${item.quantity} = ৳${item.product.price * item.quantity}\n`;
-    });
-    message += `\n💰 *সাবটোটাল:* ৳${currentTotal}\n`;
-    message += `🚚 *ডেলিভারি:* ${currentDelivery === 0 ? "ফ্রি" : `৳${currentDelivery}`}\n`;
-    message += `✅ *মোট:* ৳${currentTotal + currentDelivery}\n`;
-    message += `💳 *পেমেন্ট:* ক্যাশ অন ডেলিভারি`;
-
-    const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+    // Send notifications via edge function
+    try {
+      const { data: notifyData } = await supabase.functions.invoke('notify-order', {
+        body: {
+          orderId,
+          customerName: name,
+          phone,
+          address,
+          note: note || "",
+          items: currentItems.map((item) => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+          })),
+          subtotal: currentTotal,
+          deliveryCharge: currentDelivery,
+          total: currentTotal + currentDelivery,
+        },
+      });
+      // Open WhatsApp with order details
+      if (notifyData?.results?.whatsappUrl) {
+        window.open(notifyData.results.whatsappUrl, "_blank");
+      }
+    } catch (notifyErr) {
+      console.error("Notification error:", notifyErr);
+    }
 
     trackCompletePayment(
       orderId,
