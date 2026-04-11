@@ -35,7 +35,6 @@ Deno.serve(async (req) => {
     const TELEGRAM_BOT_TOKEN = Deno.env.get('TELEGRAM_BOT_TOKEN');
     const TELEGRAM_CHAT_ID = Deno.env.get('TELEGRAM_CHAT_ID');
 
-    console.log('Using TELEGRAM_CHAT_ID:', TELEGRAM_CHAT_ID);
     if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
       try {
         const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
