@@ -36,8 +36,11 @@ Deno.serve(async (req) => {
     const TELEGRAM_CHAT_ID = Deno.env.get('TELEGRAM_CHAT_ID');
 
     if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+      console.log('Telegram URL prefix:', `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN.substring(0, 5)}***/sendMessage`);
+      console.log('Chat ID:', TELEGRAM_CHAT_ID);
       try {
-        const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        const tgRes = await fetch(telegramUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
