@@ -1,4 +1,5 @@
 import whatsappLogo from "@/assets/whatsapp-logo.png";
+import { trackContact } from "@/lib/tracking";
 
 const WhatsAppButton = () => {
   const phoneNumber = "8801767678562";
