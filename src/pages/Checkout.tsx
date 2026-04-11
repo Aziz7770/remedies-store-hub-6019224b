@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackInitiateCheckout, trackCompletePayment } from "@/lib/tracking";
 
 const OWNER_WHATSAPP = "8801767678562";
 
@@ -20,6 +21,12 @@ const Checkout = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (items.length > 0) {
+      trackInitiateCheckout(
+        items.map((i) => ({ id: i.product.id, name: i.product.name, price: i.product.price, quantity: i.quantity })),
+        totalPrice
+      );
+    }
   }, []);
 
   const deliveryCharge = totalPrice >= 500 ? 0 : 60;
@@ -90,6 +97,12 @@ const Checkout = () => {
 
     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
+
+    trackCompletePayment(
+      orderId,
+      currentItems.map((i) => ({ id: i.product.id, name: i.product.name, price: i.product.price, quantity: i.quantity })),
+      currentTotal + currentDelivery
+    );
 
     setSubmitted(true);
     clearCart();

@@ -1,4 +1,5 @@
 import whatsappLogo from "@/assets/whatsapp-logo.png";
+import { trackContact } from "@/lib/tracking";
 
 const WhatsAppButton = () => {
   const phoneNumber = "8801767678562";
@@ -6,6 +7,7 @@ const WhatsAppButton = () => {
 
   return (
     <a
+      onClick={() => trackContact()}
       href={`https://wa.me/${phoneNumber}?text=${message}`}
       target="_blank"
       rel="noopener noreferrer"
