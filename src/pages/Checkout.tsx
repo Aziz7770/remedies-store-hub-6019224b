@@ -98,6 +98,12 @@ const Checkout = () => {
     const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
 
+    trackCompletePayment(
+      orderId,
+      currentItems.map((i) => ({ id: i.product.id, name: i.product.name, price: i.product.price, quantity: i.quantity })),
+      currentTotal + currentDelivery
+    );
+
     setSubmitted(true);
     clearCart();
     toast.success("অর্ডার সফলভাবে সম্পন্ন হয়েছে!");

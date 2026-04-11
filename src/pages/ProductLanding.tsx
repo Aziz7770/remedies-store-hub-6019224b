@@ -44,6 +44,7 @@ const ProductLanding = () => {
 
   const handleOrder = () => {
     addToCart(product);
+    trackAddToCart({ id: product.id, name: product.name, price: product.price, category: product.category });
     toast.success("অর্ডার প্রস্তুত! আপনার তথ্য দিন।");
     navigate("/checkout");
   };
