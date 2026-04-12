@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
+import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { trackInitiateCheckout, trackCompletePayment } from "@/lib/tracking";
 
@@ -142,6 +143,7 @@ const Checkout = () => {
 
   return (
     <div className="container py-8">
+      <SEO title="চেকআউট" description="আপনার অর্ডার কনফার্ম করুন।" noindex />
       <h1 className="text-2xl font-bold text-foreground">চেকআউট</h1>
       <div className="mt-6 grid gap-8 lg:grid-cols-3">
         <form onSubmit={handleSubmit} className="lg:col-span-2 space-y-4">

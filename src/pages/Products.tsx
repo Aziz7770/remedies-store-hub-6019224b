@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
+import SEO, { SITE_URL } from "@/components/SEO";
 import { products, categories } from "@/data/products";
 
 const Products = () => {
@@ -20,6 +21,11 @@ const Products = () => {
 
   return (
     <div className="container py-8">
+      <SEO
+        title="সকল হোমিওপ্যাথিক ঔষধ"
+        description="বিসমিল্লাহ হোমিও চেম্বারের সকল হোমিওপ্যাথিক ঔষধ দেখুন। গ্যাস, চর্ম, চুল, যৌন সমস্যাসহ সব ধরনের ঔষধ পাবেন। ১০০% আসল ও কার্যকর।"
+        canonical={`${SITE_URL}/products`}
+      />
       <h1 className="text-2xl font-bold text-foreground">সকল ঔষধ</h1>
       <p className="mt-1 text-sm text-muted-foreground">আপনার প্রয়োজনীয় হোমিওপ্যাথিক ঔষধ খুঁজুন</p>
 

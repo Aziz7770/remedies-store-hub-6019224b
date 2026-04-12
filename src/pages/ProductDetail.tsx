@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Star, ArrowLeft, CheckCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import SEO, { SITE_URL } from "@/components/SEO";
 import { products, productReviews } from "@/data/products";
 import { toast } from "sonner";
 import { useEffect } from "react";
@@ -42,6 +43,33 @@ const ProductDetail = () => {
 
   return (
     <div className="container py-8">
+      <SEO
+        title={`${product.name} (${product.nameEn}) - কিনুন`}
+        description={`${product.name} - ${product.description.slice(0, 120)}। মূল্য: ৳${product.price}। ১০০% আসল হোমিওপ্যাথিক ঔষধ।`}
+        canonical={`${SITE_URL}/product/${product.id}`}
+        ogImage={product.image}
+        ogType="product"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: product.description,
+          image: product.image,
+          brand: { "@type": "Brand", name: "বিসমিল্লাহ হোমিও চেম্বার" },
+          offers: {
+            "@type": "Offer",
+            price: product.price,
+            priceCurrency: "BDT",
+            availability: "https://schema.org/InStock",
+            seller: { "@type": "Organization", name: "বিসমিল্লাহ হোমিও চেম্বার" },
+          },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: product.rating,
+            reviewCount: product.reviews,
+          },
+        }}
+      />
       <Link to="/products" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary">
         <ArrowLeft className="h-4 w-4" /> সকল ঔষধ
       </Link>
