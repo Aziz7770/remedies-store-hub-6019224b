@@ -99,10 +99,7 @@ const Checkout = () => {
           total: currentTotal + currentDelivery,
         },
       });
-      // Open WhatsApp with order details
-      if (notifyData?.results?.whatsappUrl) {
-        window.open(notifyData.results.whatsappUrl, "_blank");
-      }
+      // WhatsApp redirect removed — customer can use the floating WhatsApp button instead
     } catch (notifyErr) {
       console.error("Notification error:", notifyErr);
     }
