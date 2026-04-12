@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import SEO, { SITE_URL } from "@/components/SEO";
 import { products, testimonials } from "@/data/products";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
@@ -89,6 +90,32 @@ const ProductLanding = () => {
 
   return (
     <div className="min-h-screen bg-background font-bengali">
+      <SEO
+        title={`${product.name} - ${product.problem.split("?")[0]}? সমাধান পান`}
+        description={`${product.name} (${product.nameEn}) - ${product.solution.slice(0, 100)}। মূল্য: ৳${product.price}। ১০০% প্রাকৃতিক হোমিওপ্যাথিক ঔষধ। অর্ডার করুন।`}
+        canonical={`${SITE_URL}/${product.slug}`}
+        ogImage={product.image}
+        ogType="product"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: product.solution,
+          image: product.image,
+          brand: { "@type": "Brand", name: "বিসমিল্লাহ হোমিও চেম্বার" },
+          offers: {
+            "@type": "Offer",
+            price: product.price,
+            priceCurrency: "BDT",
+            availability: "https://schema.org/InStock",
+          },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: product.rating,
+            reviewCount: product.reviews,
+          },
+        }}
+      />
 
       {/* ═══ HERO SECTION ═══ */}
       <section className="bg-gradient-to-b from-primary/5 via-background to-background pb-2 pt-6">
