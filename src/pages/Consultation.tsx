@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import SEO, { SITE_URL } from "@/components/SEO";
 import doctorImg from "@/assets/doctor-consultation.jpg";
 import { toast } from "sonner";
 
@@ -19,6 +20,11 @@ const Consultation = () => {
 
   return (
     <div className="container py-8">
+      <SEO
+        title="ফ্রি ডাক্তার পরামর্শ - হোমিওপ্যাথিক বিশেষজ্ঞ"
+        description="অভিজ্ঞ হোমিওপ্যাথিক ডাক্তারের কাছ থেকে সম্পূর্ণ বিনামূল্যে পরামর্শ নিন। ফোন ও WhatsApp এ পরামর্শ পাওয়া যায়। BHMS ও DHMS ডিগ্রিধারী ডাক্তার।"
+        canonical={`${SITE_URL}/consultation`}
+      />
       <div className="grid gap-8 md:grid-cols-2">
         <div>
           <h1 className="text-2xl font-bold text-foreground md:text-3xl">ডাক্তার পরামর্শ</h1>

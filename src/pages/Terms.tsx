@@ -1,5 +1,8 @@
+import SEO, { SITE_URL } from "@/components/SEO";
+
 const Terms = () => (
   <div className="container py-8 max-w-3xl">
+    <SEO title="শর্তাবলী" description="বিসমিল্লাহ হোমিও চেম্বারের শর্তাবলী। অর্ডার, পেমেন্ট, ডেলিভারি সংক্রান্ত সকল নিয়ম।" canonical={`${SITE_URL}/terms`} />
     <h1 className="text-2xl font-bold text-foreground">শর্তাবলী</h1>
     <div className="mt-6 space-y-4 text-sm text-foreground">
       <h2 className="text-lg font-semibold">সাধারণ শর্তাবলী</h2>

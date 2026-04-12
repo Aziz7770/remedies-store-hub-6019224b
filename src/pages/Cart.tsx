@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import SEO from "@/components/SEO";
 
 const Cart = () => {
   const { items, updateQuantity, removeFromCart, totalPrice } = useCart();
@@ -19,6 +20,7 @@ const Cart = () => {
 
   return (
     <div className="container py-8">
+      <SEO title="শপিং কার্ট" description="আপনার কার্টে থাকা ঔষধসমূহ দেখুন এবং অর্ডার করুন।" noindex />
       <h1 className="text-2xl font-bold text-foreground">শপিং কার্ট</h1>
       <div className="mt-6 grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-3">

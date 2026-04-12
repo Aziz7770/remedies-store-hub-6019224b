@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import SEO, { SITE_URL } from "@/components/SEO";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -13,6 +14,11 @@ const Contact = () => {
 
   return (
     <div className="container py-8">
+      <SEO
+        title="যোগাযোগ করুন"
+        description="বিসমিল্লাহ হোমিও চেম্বারে যোগাযোগ করুন। ফোন: ০১৭৬৭৬৭৮৫৬২। ঠিকানা: গোপালগঞ্জ, কাশিয়ানী। দিবা রাত্রি সেবা চালু।"
+        canonical={`${SITE_URL}/contact`}
+      />
       <h1 className="text-2xl font-bold text-foreground md:text-3xl">যোগাযোগ করুন</h1>
       <div className="mt-8 grid gap-8 md:grid-cols-2">
         <div className="space-y-4">

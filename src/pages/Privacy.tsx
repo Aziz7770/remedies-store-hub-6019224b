@@ -1,5 +1,8 @@
+import SEO, { SITE_URL } from "@/components/SEO";
+
 const Privacy = () => (
   <div className="container py-8 max-w-3xl">
+    <SEO title="গোপনীয়তা নীতি" description="বিসমিল্লাহ হোমিও চেম্বারের গোপনীয়তা নীতি। আপনার ব্যক্তিগত তথ্যের সুরক্ষা আমাদের অঙ্গীকার।" canonical={`${SITE_URL}/privacy`} />
     <h1 className="text-2xl font-bold text-foreground">গোপনীয়তা নীতি</h1>
     <div className="mt-6 space-y-4 text-sm text-foreground">
       <p>হোমিওকেয়ার আপনার ব্যক্তিগত তথ্যের গোপনীয়তা রক্ষায় প্রতিশ্রুতিবদ্ধ।</p>

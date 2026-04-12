@@ -3,6 +3,7 @@ import { ArrowRight, Star, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import TrustBadges from "@/components/TrustBadges";
+import SEO, { SITE_URL } from "@/components/SEO";
 import { products, categories, testimonials } from "@/data/products";
 import heroBanner from "@/assets/hero-banner.jpg";
 import doctorImg from "@/assets/doctor-consultation.jpg";
@@ -12,6 +13,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="বিসমিল্লাহ হোমিও চেম্বার - হোমিওপ্যাথিক ঔষধের অনলাইন শপ"
+        description="বিসমিল্লাহ হোমিও চেম্বার - আপনার সুস্থতার বিশ্বস্ত সঙ্গী। গ্যাস, এসিডিটি, হজমের সমস্যাসহ বিভিন্ন রোগের কার্যকর হোমিওপ্যাথিক ঔষধ। ৫০০০+ সন্তুষ্ট গ্রাহক। ফ্রি ডাক্তার পরামর্শ।"
+        canonical={SITE_URL}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "বিসমিল্লাহ হোমিও চেম্বার",
+          url: SITE_URL,
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${SITE_URL}/products?search={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">

@@ -1,5 +1,8 @@
+import SEO, { SITE_URL } from "@/components/SEO";
+
 const ReturnPolicy = () => (
   <div className="container py-8 max-w-3xl">
+    <SEO title="রিটার্ন পলিসি" description="পণ্য হাতে পাওয়ার ৭ দিনের মধ্যে রিটার্ন করতে পারবেন। রিটার্নের শর্ত ও রিফান্ড নীতি জানুন।" canonical={`${SITE_URL}/return-policy`} />
     <h1 className="text-2xl font-bold text-foreground">রিটার্ন পলিসি</h1>
     <div className="mt-6 space-y-4 text-sm text-foreground">
       <h2 className="text-lg font-semibold">রিটার্ন নীতি</h2>

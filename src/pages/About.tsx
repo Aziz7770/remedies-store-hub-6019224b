@@ -1,7 +1,13 @@
 import { Shield, Award, Heart, Users } from "lucide-react";
+import SEO, { SITE_URL } from "@/components/SEO";
 
 const About = () => (
   <div className="container py-8">
+    <SEO
+      title="আমাদের সম্পর্কে"
+      description="বিসমিল্লাহ হোমিও চেম্বার - ১০+ বছরের অভিজ্ঞতা, BHMS ও DHMS ডিগ্রিধারী ডাক্তার, ৫০০০+ সন্তুষ্ট গ্রাহক। বাংলাদেশের বিশ্বস্ত হোমিওপ্যাথিক চিকিৎসা প্রতিষ্ঠান।"
+      canonical={`${SITE_URL}/about`}
+    />
     <h1 className="text-2xl font-bold text-foreground md:text-3xl">আমাদের সম্পর্কে</h1>
     <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
       বিসমিল্লাহ হোমিও চেম্বার বাংলাদেশের সেরা হোমিওপ্যাথিক ঔষধের অনলাইন শপ। আমরা ১০০% আসল ও কার্যকর হোমিওপ্যাথিক ঔষধ সরাসরি আপনার ঘরে পৌঁছে দিই।
