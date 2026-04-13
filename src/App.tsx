@@ -57,7 +57,7 @@ const App = () => (
             <Route path="/admin/orders" element={<MainLayout><AdminOrders /></MainLayout>} />
 
             {/* Short URL: /:slug → product landing (standalone) or 404 */}
-            <Route path="/:slug" element={<SlugRouter />} />
+            <Route path="/:slug" element={<MainLayout><SlugRouter /></MainLayout>} />
           </Routes>
         </BrowserRouter>
         </OrderProvider>
