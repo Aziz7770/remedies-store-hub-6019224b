@@ -45,7 +45,7 @@ const App = () => (
             {/* Main pages with navbar & footer */}
             <Route path="/" element={<MainLayout><Index /></MainLayout>} />
             <Route path="/products" element={<MainLayout><Products /></MainLayout>} />
-            <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+            {/* Product detail now handled by /:slug below */}
             <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
             <Route path="/checkout" element={<MainLayout><Checkout /></MainLayout>} />
             <Route path="/consultation" element={<MainLayout><Consultation /></MainLayout>} />
