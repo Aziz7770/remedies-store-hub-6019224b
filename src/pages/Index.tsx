@@ -5,8 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import TrustBadges from "@/components/TrustBadges";
 import SEO, { SITE_URL } from "@/components/SEO";
 import { products, categories, testimonials } from "@/data/products";
-import heroBanner from "@/assets/hero-doctor.jpg";
-import doctorImg from "@/assets/doctor-consultation.jpg";
+import heroBanner from "@/assets/hero-banner.jpg";
+import doctorImg from "@/assets/hero-doctor.jpg";
 
 const Index = () => {
   const featuredProducts = products.filter((p) => p.featured);
