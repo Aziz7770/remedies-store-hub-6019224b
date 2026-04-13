@@ -10,7 +10,7 @@ interface SEOProps {
   jsonLd?: Record<string, unknown>;
 }
 
-const SITE_URL = "https://bismillahhomeochamber.org";
+const SITE_URL = "https://www.bismillahhomeochamber.org";
 const DEFAULT_IMAGE = `${SITE_URL}/logo-512.png`;
 const SITE_NAME = "বিসমিল্লাহ হোমিও চেম্বার";
 
