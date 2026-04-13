@@ -9,17 +9,17 @@ import { useEffect } from "react";
 import { trackViewContent, trackAddToCart } from "@/lib/tracking";
 
 const ProductDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const { addToCart } = useCart();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === id);
+  const product = products.find((p) => p.slug === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (product) {
       trackViewContent({ id: product.id, name: product.name, price: product.price, category: product.category });
     }
-  }, [id, product]);
+  }, [slug, product]);
 
   if (!product) {
     return (
@@ -46,7 +46,7 @@ const ProductDetail = () => {
       <SEO
         title={`${product.name} (${product.nameEn}) - কিনুন`}
         description={`${product.name} - ${product.description.slice(0, 120)}। মূল্য: ৳${product.price}। ১০০% আসল হোমিওপ্যাথিক ঔষধ।`}
-        canonical={`${SITE_URL}/product/${product.id}`}
+        canonical={`${SITE_URL}/${product.slug}`}
         ogImage={product.image}
         ogType="product"
         jsonLd={{

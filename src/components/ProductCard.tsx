@@ -26,7 +26,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           {discount}% ছাড়
         </span>
       )}
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/${product.slug}`}>
         <div className="aspect-square overflow-hidden bg-secondary">
           <img
             src={product.image}
@@ -37,7 +37,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </Link>
       <div className="p-3">
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/${product.slug}`}>
           <h3 className="text-sm font-semibold text-foreground line-clamp-1 hover:text-primary">
             {product.name}
           </h3>
