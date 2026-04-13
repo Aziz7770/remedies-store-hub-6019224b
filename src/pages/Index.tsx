@@ -5,7 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import TrustBadges from "@/components/TrustBadges";
 import SEO, { SITE_URL } from "@/components/SEO";
 import { products, categories, testimonials } from "@/data/products";
-import heroBanner from "@/assets/hero-banner.jpg";
+import heroBanner from "@/assets/hero-doctor.jpg";
 import doctorImg from "@/assets/doctor-consultation.jpg";
 
 const Index = () => {
